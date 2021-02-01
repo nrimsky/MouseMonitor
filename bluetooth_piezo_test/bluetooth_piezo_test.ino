@@ -13,7 +13,8 @@ void loop(){
   piezoADC = analogRead(PIEZO_PIN);
   if (piezoADC > 50) {
       BlueTooth.print(piezoADC, DEC);
-      BlueTooth.println();
+      BlueTooth.print(",");
+      Serial.println(piezoADC, DEC);
   }
   delay(10);
 }  
