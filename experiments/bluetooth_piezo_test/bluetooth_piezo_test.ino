@@ -21,16 +21,16 @@ void setup(){
 
 void loop(){ 
   piezoADC = analogRead(PIEZO_PIN);
-  BlueTooth.print(piezoADC, DEC);
-  BlueTooth.print(",");
-  tot-=buf[read_index];
-  buf[read_index] = piezoADC;
-  tot+= piezoADC;
-  read_index+=1;
-  if (read_index >= moving_avg_size) {
-    read_index = 0;
-  }
-  avg = tot/moving_avg_size;
-  Serial.println(avg);
+//  BlueTooth.print(piezoADC, DEC);
+//  BlueTooth.print(",");
+//  tot-=buf[read_index];
+//  buf[read_index] = piezoADC;
+//  tot+= piezoADC;
+//  read_index+=1;
+//  if (read_index >= moving_avg_size) {
+//    read_index = 0;
+//  }
+//  avg = tot/moving_avg_size;
+  Serial.println(piezoADC);
   delay(1);
 }  
