@@ -3,7 +3,7 @@
 
 SoftwareSerial BlueTooth(10, 11); // RX | TX 
 
-const double samplingFrequency = 500; // Hz, must be less than 10000 due to ADC
+const double samplingFrequency = 10; // Hz, must be less than 10000 due to ADC
 
 unsigned int sampling_period_us;
 unsigned long microseconds;
