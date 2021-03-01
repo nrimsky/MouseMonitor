@@ -4,7 +4,7 @@ arduinoFFT FFT = arduinoFFT(); /* Create FFT object */
 
 #define CHANNEL A0
 const uint16_t samples = 128; // This value MUST ALWAYS be a power of 2 (comment from FFT library)
-const double samplingFrequency = 3; // Hz, must be less than 10000 due to ADC
+const double samplingFrequency = 4; // Hz, must be less than 10000 due to ADC
 
 
 unsigned int sampling_period_us;
@@ -23,10 +23,10 @@ void setup() {
   Serial.println("Ready");
 }
 
-int mock_data_length = 90;
+int mock_data_length = 70;
 int mock_data_index = 0;
 // Mock data from Xueyan (downsampled to 3Hz)
-float mock_data[90] = {0.65,0.52,0.61,0.59,0.53,0.74,0.63,3.6,0.78,0.69,0.64,0.85,0.82,0.68,4.44,0.81,0.69,0.94,0.86,1.73,0.66,1.76,0.52,0.72,0.71,0.58,2.09,0.27,0.2,0.46,0.42,0.0,0.16,3.14,0.12,0.38,0.07,0.07,0.19,0.16,4.11,0.28,0.22,0.22,0.44,0.18,0.24,2.55,0.33,0.41,0.59,0.45,0.09,0.33,4.75,0.26,0.43,0.01,0.15,0.1,0.0,2.82,0.17,1.56,0.12,0.19,0.02,0.17,4.83,0.14,3.42,0.14,0.37,0.22,0.23,0.0,0.23,0.1,0.03,5.0,0.17,0.07,0.1,0.11,0.0,0.19,5.0,0.03,0.26,0.18};
+float mock_data[70] = {1.78,2.36,1.67,1.98,2.24,1.68,1.8,2.31,1.67,1.84,2.29,1.66,1.92,2.19,1.7,1.87,2.92,1.87,2.07,3.16,1.99,2.0,3.48,2.03,1.94,3.21,1.94,1.91,3.01,2.02,2.03,3.1,1.92,1.83,2.19,1.87,1.79,1.87,2.33,1.61,1.92,2.21,1.76,1.85,3.5,2.11,1.92,2.75,1.79,1.82,1.81,2.18,1.58,1.96,2.06,1.68,1.98,2.59,1.85,1.92,3.52,1.99,2.31,3.21,1.79,3.57,0.63,1.16,1.78,1.72};
 
 void loop() {
   microseconds = micros();
