@@ -30,23 +30,33 @@ float mock_data[90] = {0.65,0.52,0.61,0.59,0.53,0.74,0.63,3.6,0.78,0.69,0.64,0.8
 
 void loop() {
   microseconds = micros();
+  
+  // This for loop fills up the arrays vReal and vImag with sampled data
+  // Only after the arrays are filled is the fft calculated
   for(int i=0; i<samples; i++){
-    // Take a "sample" from the mock data - this line of code could be replaced with taking a sample from the piezo sensor
+
+    // This code is just so that the mock data is repeatedly sampled (the index should wrap around to the beginning of the array)
+    // The section is not needed if real data is used
     if (mock_data_index >= mock_data_length) {
       mock_data_index = 0;
     }
     mock_data_index++;
+
+    
+    // Take a "sample" from the mock data - this line of code could be replaced with taking a sample from the piezo sensor
     vReal[i] = mock_data[mock_data_index];
     vImag[i] = 0;
+    // This line of code is just to "wait" until sampling_period_us has elapsed until taking the next sample
     while(micros() - microseconds < sampling_period_us){}
     microseconds += sampling_period_us;
   }
 
-  /*Calculate FFT*/
-  FFT.Windowing(vReal, samples, FFT_WIN_TYP_HAMMING, FFT_FORWARD);  /* Weigh data */
-  FFT.Compute(vReal, vImag, samples, FFT_FORWARD); /* Compute FFT */
-  FFT.ComplexToMagnitude(vReal, vImag, samples); /* Compute magnitudes */
+  // FFT calculation
+  FFT.Windowing(vReal, samples, FFT_WIN_TYP_HAMMING, FFT_FORWARD);  // Weight the sample array with a hamming window
+  FFT.Compute(vReal, vImag, samples, FFT_FORWARD); // Compute FFT of the collected samples
+  FFT.ComplexToMagnitude(vReal, vImag, samples); // Convert complex values to magnitudes
 
+  // Print the FFT of that window to the console
   Serial.println("FFT");
   for (int i=0; i<samples; i++) {
     double freq = (i * 1.0 * samplingFrequency) / samples;
@@ -55,9 +65,12 @@ void loop() {
     Serial.print(vReal[i]);
     Serial.println();
   }
+  
   Serial.println("Dominant frequency");
   double x = FFT.MajorPeak(vReal, samples, samplingFrequency);
   Serial.print(x*60, 3); //Print out what frequency is the most dominant (in BPM)
   Serial.print("BPM");
+  
+  // Wait any amount of time until doing the next window
   delay(1); 
 }
