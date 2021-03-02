@@ -30,8 +30,13 @@ float smoothing_avg;
 
 void setup() {
 
+  // Initialise moving average arrays to all 0
+  // Note - the first few readings are inaccurate as it takes time for the long average to stabilise
   for (int i = 0; i < ma_len; i++) {
     ma_win[i]=0;
+  }
+  for (int i = 0; i < smoothing_ma_len; i++) {
+    smoothing_ma_win[i]=0;
   }
   
   sampling_period_ms = round(1000 *(1.0/samplingFrequency));
